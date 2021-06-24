@@ -4,7 +4,8 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+// var usersRouter = require('./routes/users');
+var moviesRouter = require('./routes/movies');
 
 var app = express();
 
@@ -15,6 +16,18 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/movies', moviesRouter);
 
+
+
+app.get('/setCookie', (_,res) => {
+    res.cookie("firstName", "Jacob");
+    res.cookie("lastName", "Musselman");
+    res.status(200).send("Cookie set");
+})
+
+app.get('/readCookie', (req, res) => {
+  let myCookies = req.cookies
+  res.status(200).send(`${myCookies.firstName} ${myCookies.lastName} we know who you are and what you did last summer`)
+})
 module.exports = app;
