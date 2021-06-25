@@ -34,18 +34,14 @@ router.get('/:movieId', (req, res) => {
 
 router.post('/', (req, res) => {
     const newMovie = req.body;
+    const { title, runtime, release_year, director } = newMovie;
     console.log(newMovie);
-    if(Object.keys(newMovie).length > 0) {
-        const { title, runtime, release_year, director } = newMovie;
-        if(title && runtime && release_year && director) {
-            newMovie.id = movies.length + 1;
-            movies.push(newMovie);
-            res.status(200).send(`${title} added with id ${newMovie.id}`);
-        } else {
-            res.status(400).send('Missing a key.');
-        }
+    if(title && runtime && release_year && director) {
+        newMovie.id = movies.length + 1;
+        movies.push(newMovie);
+        res.status(200).send(`${title} added with id ${newMovie.id}`);
     } else {
-        res.status(400).send('Missing new movie');
+        res.status(400).send('Missing keys to new movie');
     }
 })
 
